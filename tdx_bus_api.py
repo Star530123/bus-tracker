@@ -1,8 +1,9 @@
 import requests
 import json
+import os
 
-CLIENT_ID = None
-CLIENT_SECRET = None
+CLIENT_ID = os.getenv('CLIENT_ID')
+CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
 AUTH_URL="https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
 TDX_V2_BUS_API_BASE_URL = 'https://tdx.transportdata.tw/api/basic'
@@ -35,6 +36,3 @@ def __get_auth_header():
         'client_id' : CLIENT_ID,
         'client_secret' : CLIENT_SECRET
     }
-
-# if __name__ == '__main__':
-#     print(get_bus_real_time_near_stop('Taipei', 672).text)

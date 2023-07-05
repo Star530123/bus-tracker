@@ -16,9 +16,21 @@ def get_bus_real_time_near_stop(city, route, top=30, format='JSON'):
         top=top, 
         format=format
     )
+    return requests.get(url, headers=__get_api_header()).text
+
+def get_bus_stop_of_route(city, route, top=30, format='JSON'):
+    url = '{base_url}/v2/Bus/StopOfRoute/City/{city_name}/{route_name}?%24top={top}&%24format={format}'.format(
+        base_url=TDX_V2_BUS_API_BASE_URL, 
+        city_name=city, 
+        route_name=route, 
+        top=top, 
+        format=format
+    )
     return requests.get(url, headers=__get_api_header())
 
 def __get_api_header():
+    # TODO 需要修改取得 access_token 的時間點，每次打api都要重新取得access_token太浪費資源
+    # https://github.com/tdxmotc/SampleCode
     authentication = requests.post(AUTH_URL, __get_auth_header()).text
     access_token = json.loads(authentication).get('access_token')
     return{

@@ -15,15 +15,18 @@ def __api_url(api_endpoint: str, query: str) -> str:
         query=query
     )
 
+# TODO refactor
+# 1. GET bus 相關 API 可以在extract邏輯，再想一下要抽共用method還是抽成class
+# 2. __format_query 再思考一下有沒有更好的寫法以及用法，像是select和filter能夠更方便使用 (像是filter的odata語法可抽成enum)
 def get_bus_real_time_near_stop(city, route, top=30, format='JSON', select='PlateNumb,Direction,StopName', filter=None) -> str:
     api_endpoint = '/v2/Bus/RealTimeNearStop/City/{city_name}/{route_name}'.format(city_name=city, route_name=route)
     url = __api_url(api_endpoint=api_endpoint, query=__format_query(top=top, format=format, select=select, filter=filter))
-    return requests.get(url, headers=__get_api_header()).text
+    return json.loads(requests.get(url, headers=__get_api_header()).text)
 
-def get_bus_stop_of_route(city, route, top=30, format='JSON', select='PlateNumb,Direction,StopName', filter=None) -> str:
+def get_bus_stop_of_route(city, route, top=30, format='JSON', select='Direction,Stops', filter=None) -> str:
     api_endpoint = '/v2/Bus/StopOfRoute/City/{city_name}/{route_name}'.format(city_name=city, route_name=route)
     url = __api_url(api_endpoint=api_endpoint, query=__format_query(top=top, format=format, select=select, filter=filter))
-    return requests.get(url, headers=__get_api_header())
+    return json.loads(requests.get(url, headers=__get_api_header()).text)
 
 def __get_api_header() -> dict:
     # TODO 需要修改取得 access_token 的時間點，每次打api都要重新取得access_token太浪費資源

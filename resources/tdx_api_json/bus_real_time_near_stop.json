@@ -1,0 +1,312 @@
+[
+    {
+        "PlateNumb": "282-U3",
+        "OperatorID": "700",
+        "OperatorNo": "0813",
+        "RouteUID": "TPE10785",
+        "RouteID": "10785",
+        "RouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "SubRouteUID": "TPE107850",
+        "SubRouteID": "107850",
+        "SubRouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "Direction": 1,
+        "StopUID": "TPE38908",
+        "StopID": "38908",
+        "StopName": {
+            "Zh_tw": "南京新村",
+            "En": "Nanjing New Village"
+        },
+        "StopSequence": 6,
+        "DutyStatus": 1,
+        "BusStatus": 0,
+        "A2EventType": 0,
+        "GPSTime": "2023-07-06T17:39:01+08:00",
+        "SrcUpdateTime": "2023-07-06T17:39:30+08:00",
+        "UpdateTime": "2023-07-06T17:39:33+08:00"
+    },
+    {
+        "PlateNumb": "286-U3",
+        "OperatorID": "700",
+        "OperatorNo": "0813",
+        "RouteUID": "TPE10785",
+        "RouteID": "10785",
+        "RouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "SubRouteUID": "TPE107850",
+        "SubRouteID": "107850",
+        "SubRouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "Direction": 0,
+        "StopUID": "TPE38857",
+        "StopID": "38857",
+        "StopName": {
+            "Zh_tw": "中正環河路口",
+            "En": "Zhongzheng&Huanhe Rd.Intersection"
+        },
+        "StopSequence": 1,
+        "DutyStatus": 1,
+        "BusStatus": 0,
+        "A2EventType": 0,
+        "GPSTime": "2023-07-06T17:37:59+08:00",
+        "SrcUpdateTime": "2023-07-06T17:39:30+08:00",
+        "UpdateTime": "2023-07-06T17:39:33+08:00"
+    },
+    {
+        "PlateNumb": "287-U3",
+        "OperatorID": "700",
+        "OperatorNo": "0813",
+        "RouteUID": "TPE10785",
+        "RouteID": "10785",
+        "RouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "SubRouteUID": "TPE107850",
+        "SubRouteID": "107850",
+        "SubRouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "Direction": 1,
+        "StopUID": "TPE38913",
+        "StopID": "38913",
+        "StopName": {
+            "Zh_tw": "市民住宅",
+            "En": "Citizens Housing"
+        },
+        "StopSequence": 11,
+        "DutyStatus": 1,
+        "BusStatus": 0,
+        "A2EventType": 0,
+        "GPSTime": "2023-07-06T17:39:13+08:00",
+        "SrcUpdateTime": "2023-07-06T17:39:30+08:00",
+        "UpdateTime": "2023-07-06T17:39:33+08:00"
+    },
+    {
+        "PlateNumb": "707-U3",
+        "OperatorID": "700",
+        "OperatorNo": "0813",
+        "RouteUID": "TPE10785",
+        "RouteID": "10785",
+        "RouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "SubRouteUID": "TPE107850",
+        "SubRouteID": "107850",
+        "SubRouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "Direction": 0,
+        "StopUID": "TPE38880",
+        "StopID": "38880",
+        "StopName": {
+            "Zh_tw": "羅斯福金門街口",
+            "En": "Roosevelt and Kinmen St. Intersection"
+        },
+        "StopSequence": 18,
+        "DutyStatus": 1,
+        "BusStatus": 0,
+        "A2EventType": 0,
+        "GPSTime": "2023-07-06T17:36:45+08:00",
+        "SrcUpdateTime": "2023-07-06T17:39:30+08:00",
+        "UpdateTime": "2023-07-06T17:39:33+08:00"
+    },
+    {
+        "PlateNumb": "731-U3",
+        "OperatorID": "700",
+        "OperatorNo": "0813",
+        "RouteUID": "TPE10785",
+        "RouteID": "10785",
+        "RouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "SubRouteUID": "TPE107850",
+        "SubRouteID": "107850",
+        "SubRouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "Direction": 1,
+        "StopUID": "TPE38936",
+        "StopID": "38936",
+        "StopName": {
+            "Zh_tw": "捷運秀朗橋站",
+            "En": "MRT Xiulang Bridge Sta."
+        },
+        "StopSequence": 32,
+        "DutyStatus": 1,
+        "BusStatus": 0,
+        "A2EventType": 0,
+        "GPSTime": "2023-07-06T17:36:45+08:00",
+        "SrcUpdateTime": "2023-07-06T17:39:30+08:00",
+        "UpdateTime": "2023-07-06T17:39:33+08:00"
+    },
+    {
+        "PlateNumb": "735-U3",
+        "OperatorID": "700",
+        "OperatorNo": "0813",
+        "RouteUID": "TPE10785",
+        "RouteID": "10785",
+        "RouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "SubRouteUID": "TPE107850",
+        "SubRouteID": "107850",
+        "SubRouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "Direction": 0,
+        "StopUID": "TPE38898",
+        "StopID": "38898",
+        "StopName": {
+            "Zh_tw": "長庚醫院",
+            "En": "Chang-Gung Memorial Hospital"
+        },
+        "StopSequence": 35,
+        "DutyStatus": 1,
+        "BusStatus": 0,
+        "A2EventType": 0,
+        "GPSTime": "2023-07-06T17:37:00+08:00",
+        "SrcUpdateTime": "2023-07-06T17:39:30+08:00",
+        "UpdateTime": "2023-07-06T17:39:33+08:00"
+    },
+    {
+        "PlateNumb": "801-U3",
+        "OperatorID": "700",
+        "OperatorNo": "0813",
+        "RouteUID": "TPE10785",
+        "RouteID": "10785",
+        "RouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "SubRouteUID": "TPE107850",
+        "SubRouteID": "107850",
+        "SubRouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "Direction": 1,
+        "StopUID": "TPE38924",
+        "StopID": "38924",
+        "StopName": {
+            "Zh_tw": "福和橋(林森路)",
+            "En": "Fuhe Bridge(Linsen Rd.)"
+        },
+        "StopSequence": 22,
+        "DutyStatus": 1,
+        "BusStatus": 0,
+        "A2EventType": 1,
+        "GPSTime": "2023-07-06T17:38:51+08:00",
+        "SrcUpdateTime": "2023-07-06T17:39:30+08:00",
+        "UpdateTime": "2023-07-06T17:39:33+08:00"
+    },
+    {
+        "PlateNumb": "802-U3",
+        "OperatorID": "700",
+        "OperatorNo": "0813",
+        "RouteUID": "TPE10785",
+        "RouteID": "10785",
+        "RouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "SubRouteUID": "TPE107850",
+        "SubRouteID": "107850",
+        "SubRouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "Direction": 1,
+        "StopUID": "TPE38913",
+        "StopID": "38913",
+        "StopName": {
+            "Zh_tw": "市民住宅",
+            "En": "Citizens Housing"
+        },
+        "StopSequence": 11,
+        "DutyStatus": 1,
+        "BusStatus": 0,
+        "A2EventType": 0,
+        "GPSTime": "2023-07-06T17:39:22+08:00",
+        "SrcUpdateTime": "2023-07-06T17:39:30+08:00",
+        "UpdateTime": "2023-07-06T17:39:33+08:00"
+    },
+    {
+        "PlateNumb": "803-U3",
+        "OperatorID": "700",
+        "OperatorNo": "0813",
+        "RouteUID": "TPE10785",
+        "RouteID": "10785",
+        "RouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "SubRouteUID": "TPE107850",
+        "SubRouteID": "107850",
+        "SubRouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "Direction": 0,
+        "StopUID": "TPE38875",
+        "StopID": "38875",
+        "StopName": {
+            "Zh_tw": "福和橋(永元路)",
+            "En": "Fuhe Bridge(Yongyuan Rd.)"
+        },
+        "StopSequence": 13,
+        "DutyStatus": 1,
+        "BusStatus": 0,
+        "A2EventType": 0,
+        "GPSTime": "2023-07-06T17:37:49+08:00",
+        "SrcUpdateTime": "2023-07-06T17:39:30+08:00",
+        "UpdateTime": "2023-07-06T17:39:33+08:00"
+    },
+    {
+        "PlateNumb": "FAA-159",
+        "OperatorID": "700",
+        "OperatorNo": "0813",
+        "RouteUID": "TPE10785",
+        "RouteID": "10785",
+        "RouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "SubRouteUID": "TPE107850",
+        "SubRouteID": "107850",
+        "SubRouteName": {
+            "Zh_tw": "672",
+            "En": "672"
+        },
+        "Direction": 0,
+        "StopUID": "TPE38892",
+        "StopID": "38892",
+        "StopName": {
+            "Zh_tw": "長安東路二段",
+            "En": "Changan E. Rd. Sec. 2"
+        },
+        "StopSequence": 29,
+        "DutyStatus": 1,
+        "BusStatus": 0,
+        "A2EventType": 0,
+        "GPSTime": "2023-07-06T17:36:51+08:00",
+        "SrcUpdateTime": "2023-07-06T17:39:30+08:00",
+        "UpdateTime": "2023-07-06T17:39:33+08:00"
+    }
+]

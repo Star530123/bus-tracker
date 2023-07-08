@@ -2,6 +2,7 @@ import requests
 import json
 import os
 import time
+from tdx_api.bus.query import *
 
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
@@ -13,19 +14,19 @@ api_header_data = {}
 
 # TODO refactor
 # __format_query 再思考一下有沒有更好的寫法以及用法，像是select和filter能夠更方便使用 (像是filter的odata語法可抽成enum)
-def get_bus_real_time_near_stop(city, route, top=30, format='JSON', select='PlateNumb,Direction,StopName', filter=None) -> str:
+def get_bus_real_time_near_stop(city, route, query) -> str:
     api_endpoint = '/v2/Bus/RealTimeNearStop/City/{city_name}/{route_name}'.format(city_name=city, route_name=route)
-    return __get_api(api_endpoint=api_endpoint, top=top, format=format, select=select, filter=filter)
+    return __get_api(api_endpoint=api_endpoint, query=query)
 
-def get_bus_stop_of_route(city, route, top=30, format='JSON', select='Direction,Stops', filter=None) -> str:
+def get_bus_stop_of_route(city, route, query) -> str:
     api_endpoint = '/v2/Bus/StopOfRoute/City/{city_name}/{route_name}'.format(city_name=city, route_name=route)
-    return __get_api(api_endpoint=api_endpoint, top=top, format=format, select=select, filter=filter)
+    return __get_api(api_endpoint=api_endpoint, query=query)
 
-def __get_api(api_endpoint: str, **queries):
+def __get_api(api_endpoint: str, query):
     url = '{base_url}{api_endpoint}?{query}'.format(
         base_url=TDX_V2_BUS_API_BASE_URL,
         api_endpoint=api_endpoint,
-        query=__format_query(**queries)
+        query=query
     )
     return json.loads(requests.get(url, headers=__api_header()).text)
 
@@ -51,8 +52,3 @@ def __auth_api_header() -> dict:
         'client_id' : CLIENT_ID,
         'client_secret' : CLIENT_SECRET
     }
-
-def __format_query(**queries) -> str:
-    queries = {k: v for k, v in queries.items() if v is not None}
-    query_list = ['${k}={v}'.format(k=k, v=v) for k, v in queries.items()]
-    return '&'.join(query_list)

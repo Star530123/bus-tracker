@@ -1,6 +1,7 @@
 from user_setting import UserSetting
 from tdx_bus_api import *
 from typing import Dict, Tuple
+from tdx_api.bus.response import *
 
 class BusTracker:
     def __init__(self):
@@ -26,16 +27,19 @@ class BusTracker:
     def increment_user_count(self) -> None:
         self._user_count += 1
     
-    def get_stops_of_route(self, key, filter):
+    def get_stops_of_route(self, key, query):
         if self.stops_of_route_dict.get(key) is not None:
             return self.stops_of_route_dict[key]
-        self.stops_of_route_dict[key] = get_bus_stop_of_route(city=key[0], route=key[1], filter=filter)
+        self.stops_of_route_dict[key] = get_bus_stop_of_route(city=key[0], route=key[1], query=query)
         return self.stops_of_route_dict[key]
 
     def subscribe_route_notification(self, setting: UserSetting) -> None:
         key = (setting.city, setting.route)
         filter = 'SubRouteName/Zh_tw eq \'{route}\''.format(route=setting.route)
-        stops_of_route = self.get_stops_of_route(key, filter)
+        query = Query()
+        query.select([StopOfRoute.DIRECTION, StopOfRoute.STOPS])
+        query.filter(filter)
+        stops_of_route = self.get_stops_of_route(key, query.complete())
         setting.update_information(stops_of_route)
         if key not in self.route_subscription_dict:
             self.route_subscription_dict[key] = [setting]
@@ -51,7 +55,9 @@ class BusTracker:
         # 2. Notify logic(Responsibility), 現在通知邏輯是寫在 bus_tracker 中且直接print，不過完整版應該是要通知到"個別使用者"，所以通知邏輯應該要寫在UserSetting，或者將要通知的使用者從bus_tracker回傳出去
         remove_set = set()
         for (city, route), user_setting_list in self.route_subscription_dict.items():
-            real_time_near_stops = get_bus_real_time_near_stop(city, route)
+            query = Query()
+            query.select([RealTimeNearStop.PLATE_NUMB, RealTimeNearStop.DIRECTION, RealTimeNearStop.STOP_NAME])
+            real_time_near_stops = get_bus_real_time_near_stop(city, route, query.complete())
             direction_real_time_stop_sequence_dict = {}
             for real_time_near_stop in real_time_near_stops:
                 direction = real_time_near_stop['Direction']

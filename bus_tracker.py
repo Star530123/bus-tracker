@@ -60,7 +60,7 @@ class BusTracker:
                 direction_real_time_stop_sequence_dict[direction].add(real_time_near_stop['StopSequence'])
             print('Current buses positions: {stops}'.format(stops=direction_real_time_stop_sequence_dict))
             for user_setting in user_setting_list:
-                if len(direction_real_time_stop_sequence_dict[user_setting.direction] & user_setting.notify_stops) != 0:
+                if len(direction_real_time_stop_sequence_dict[user_setting.direction.value] & user_setting.notify_stops) != 0:
                     message = '{username}, your bus {route} is approaching.'.format(
                         username=user_setting.username, 
                         route=user_setting.route

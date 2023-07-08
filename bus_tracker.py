@@ -35,7 +35,7 @@ class BusTracker:
 
     def subscribe_route_notification(self, setting: UserSetting) -> None:
         key = (setting.city, setting.route)
-        filter = 'SubRouteName/Zh_tw eq \'{route}\''.format(route=setting.route)
+        filter = 'RouteName/Zh_tw eq \'{route}\''.format(route=setting.route)
         query = Query()
         query.select([StopOfRoute.DIRECTION, StopOfRoute.STOPS])
         query.filter(filter)

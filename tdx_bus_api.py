@@ -1,12 +1,15 @@
 import requests
 import json
 import os
+import time
 
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 
 AUTH_URL="https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
 TDX_V2_BUS_API_BASE_URL = 'https://tdx.transportdata.tw/api/basic'
+
+api_header_data = {}
 
 def __api_url(api_endpoint: str, query: str) -> str:
     return '{base_url}{api_endpoint}?{query}'.format(
@@ -29,13 +32,15 @@ def get_bus_stop_of_route(city, route, top=30, format='JSON', select='Direction,
     return json.loads(requests.get(url, headers=__get_api_header()).text)
 
 def __get_api_header() -> dict:
-    # TODO 需要修改取得 access_token 的時間點，每次打api都要重新取得access_token太浪費資源
-    # https://github.com/tdxmotc/SampleCode
-    authentication = requests.post(AUTH_URL, __get_auth_header()).text
-    access_token = json.loads(authentication).get('access_token')
-    return{
-        'authorization': 'Bearer '+ access_token
-    }
+    if len(api_header_data) == 0 or time.time() >= api_header_data['expired_time']:
+        authentication = requests.post(AUTH_URL, __get_auth_header()).text
+        response = json.loads(authentication)
+        api_header_data['api_header'] = {
+            'authorization': 'Bearer '+ response.get('access_token')
+        }
+        api_header_data['expired_time'] = time.time() + response.get('expires_in')
+        print(api_header_data)
+    return api_header_data['api_header'] 
 
 def __get_auth_header() -> dict:
     if CLIENT_ID is None or CLIENT_SECRET is None:

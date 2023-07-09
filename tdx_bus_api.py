@@ -16,23 +16,23 @@ api_header_data = {}
 # __format_query 再思考一下有沒有更好的寫法以及用法，像是select和filter能夠更方便使用 (像是filter的odata語法可抽成enum)
 def get_bus_real_time_near_stop(city, route, query) -> str:
     api_endpoint = '/v2/Bus/RealTimeNearStop/City/{city_name}/{route_name}'.format(city_name=city, route_name=route)
-    return __get_api(api_endpoint=api_endpoint, query=query)
+    return _get_api(api_endpoint=api_endpoint, query=query)
 
 def get_bus_stop_of_route(city, route, query) -> str:
     api_endpoint = '/v2/Bus/StopOfRoute/City/{city_name}/{route_name}'.format(city_name=city, route_name=route)
-    return __get_api(api_endpoint=api_endpoint, query=query)
+    return _get_api(api_endpoint=api_endpoint, query=query)
 
-def __get_api(api_endpoint: str, query):
+def _get_api(api_endpoint: str, query):
     url = '{base_url}{api_endpoint}?{query}'.format(
         base_url=TDX_V2_BUS_API_BASE_URL,
         api_endpoint=api_endpoint,
         query=query
     )
-    return json.loads(requests.get(url, headers=__api_header()).text)
+    return json.loads(requests.get(url, headers=_api_header()).text)
 
-def __api_header() -> dict:
+def _api_header() -> dict:
     if len(api_header_data) == 0 or time.time() >= api_header_data['expired_time']:
-        authentication = requests.post(AUTH_URL, __auth_api_header()).text
+        authentication = requests.post(AUTH_URL, _auth_api_header()).text
         response = json.loads(authentication)
         api_header_data['api_header'] = {
             'authorization': 'Bearer '+ response.get('access_token')
@@ -41,7 +41,7 @@ def __api_header() -> dict:
         print(api_header_data)
     return api_header_data['api_header'] 
 
-def __auth_api_header() -> dict:
+def _auth_api_header() -> dict:
     if CLIENT_ID is None or CLIENT_SECRET is None:
         raise Exception('Please set CLIENT_ID and CLIENT_SECRET!')
     content_type = 'application/x-www-form-urlencoded'

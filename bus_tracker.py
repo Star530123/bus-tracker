@@ -27,7 +27,16 @@ class BusTracker:
     def increment_user_count(self) -> None:
         self._user_count += 1
     
-    def get_stops_of_route(self, key):
+    def subscribe_route_notification(self, setting: UserSetting) -> None:
+        key = (setting.city, setting.route)
+        setting.update_notify_stops(self._get_stops_of_route(key))
+        if key not in self.route_subscription_dict:
+            self.route_subscription_dict[key] = [setting]
+        else:
+            self.route_subscription_dict[key].append(setting)
+        self.increment_user_count()
+    
+    def _get_stops_of_route(self, key):
         if self.stops_of_route_dict.get(key) is not None:
             return self.stops_of_route_dict[key]
         query = Query()
@@ -35,16 +44,6 @@ class BusTracker:
         query.filter(f"RouteName/Zh_tw eq '{key[1]}'")
         self.stops_of_route_dict[key] = get_bus_stop_of_route(city=key[0], route=key[1], query=query.complete())
         return self.stops_of_route_dict[key]
-
-    def subscribe_route_notification(self, setting: UserSetting) -> None:
-        key = (setting.city, setting.route)
-        stops_of_route = self.get_stops_of_route(key)
-        setting.update_information(stops_of_route)
-        if key not in self.route_subscription_dict:
-            self.route_subscription_dict[key] = [setting]
-        else:
-            self.route_subscription_dict[key].append(setting)
-        self.increment_user_count()
     
     def track(self) -> None:
         # 總User數量為N，總公車數量為M

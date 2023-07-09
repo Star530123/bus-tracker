@@ -1,4 +1,5 @@
 from tdx_api.bus import enum as BusEnum
+from typing import Dict, Set
 NOTIFICATION_LIMIT = 3
 
 class UserSetting:
@@ -13,7 +14,7 @@ class UserSetting:
         self._notify_counter = 0
 
     @property
-    def user_name(self) -> str:
+    def username(self) -> str:
         return self._username
     
     @property
@@ -56,3 +57,9 @@ class UserSetting:
     
     def has_reached_notification_limit(self):
         return self._notify_counter >= NOTIFICATION_LIMIT 
+    
+    def is_bus_approaching(self, direction_stop_sequence_dict:Dict[int, Set[int]]) -> bool:
+        return len(direction_stop_sequence_dict[self.direction.value] & self.notify_stops) != 0
+    
+    def notify(self):
+        print(f'{self.username}, your bus {self.route} is approaching.')

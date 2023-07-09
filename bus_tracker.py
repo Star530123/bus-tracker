@@ -1,16 +1,17 @@
 from user_setting import UserSetting
 from tdx_bus_api import *
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Set
 from tdx_api.bus.response import *
+from itertools import groupby
 
 class BusTracker:
     def __init__(self):
         self._route_subscription_dict = {}
-        self._stops_of_route_dict: dict[tuple, UserSetting]  = {}
+        self._stops_of_route_dict: Dict[tuple, list[UserSetting]]  = {}
         self._user_count = 0
     
     @property
-    def route_subscription_dict(self) -> Dict[Tuple, UserSetting]:
+    def route_subscription_dict(self) -> Dict[Tuple, List[UserSetting]]:
         return self._route_subscription_dict
 
     @property
@@ -46,33 +47,27 @@ class BusTracker:
         return self.stops_of_route_dict[key]
     
     def track(self) -> None:
-        # 總User數量為N，總公車數量為M
-        # 雖然是兩層for迴圈，但時間複雜度僅有 O(M+N)
-        # TODO refactor
-        # 1. Readability, notify & 處理不同方向路線的邏輯或許可以再拆成其他method
-        # 2. Notify logic(Responsibility), 現在通知邏輯是寫在 bus_tracker 中且直接print，不過完整版應該是要通知到"個別使用者"，所以通知邏輯應該要寫在UserSetting，或者將要通知的使用者從bus_tracker回傳出去
         remove_set = set()
         for (city, route), user_setting_list in self.route_subscription_dict.items():
             query = Query()
             query.select([RealTimeNearStop.PLATE_NUMB, RealTimeNearStop.DIRECTION, RealTimeNearStop.STOP_NAME])
             real_time_near_stops = get_bus_real_time_near_stop(city, route, query.complete())
-            direction_real_time_stop_sequence_dict = {}
-            for real_time_near_stop in real_time_near_stops:
-                direction = real_time_near_stop['Direction']
-                if direction_real_time_stop_sequence_dict.get(direction) is None:
-                    direction_real_time_stop_sequence_dict[direction] = set()
-                direction_real_time_stop_sequence_dict[direction].add(real_time_near_stop['StopSequence'])
-            print('Current buses positions: {stops}'.format(stops=direction_real_time_stop_sequence_dict))
+            direction_stop_sequence_dict = self._direction_stop_sequence_dict(real_time_near_stops)
+            print(f'Current buses positions: {direction_stop_sequence_dict}')
+
             for user_setting in user_setting_list:
-                if len(direction_real_time_stop_sequence_dict[user_setting.direction.value] & user_setting.notify_stops) != 0:
-                    message = '{username}, your bus {route} is approaching.'.format(
-                        username=user_setting.username, 
-                        route=user_setting.route
-                    )
-                    print(message)
+                if user_setting.is_bus_approaching(direction_stop_sequence_dict):
+                    user_setting.notify()
                     user_setting.increment_notify_counter()
                     if user_setting.has_reached_notification_limit():
                         remove_set.add(user_setting)
                         self.decrement_user_count()
+
         for key, user_setting_list in self.route_subscription_dict.items():
             self.route_subscription_dict[key] = [setting for setting in user_setting_list if setting not in remove_set]
+
+    def _direction_stop_sequence_dict(self, real_time_near_stops) -> Dict[int, Set[int]]:
+        sorted_stops = sorted(real_time_near_stops, key=lambda stop: stop['Direction'])
+        grouped_stops = groupby(sorted_stops, lambda stop: stop['Direction'])
+        
+        return {k: set(map(lambda stop: stop['StopSequence'], v)) for k, v in grouped_stops}

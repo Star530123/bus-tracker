@@ -1,5 +1,5 @@
 from user_setting import UserSetting
-from tdx_bus_api import *
+from tdx_api.bus.v2.api import *
 from typing import Dict, Tuple, Set
 from tdx_api.bus.response import *
 from itertools import groupby

@@ -1,5 +1,5 @@
 import settings
-from tdx_bus_api import *
+from tdx_api.bus.v2.api import *
 from bus_tracker import BusTracker
 from user_setting import UserSetting
 import time

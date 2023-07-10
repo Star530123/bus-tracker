@@ -45,7 +45,7 @@ class UserSetting:
     def notify_counter(self) -> int:
         return self._notify_counter
     
-    def update_notify_stops(self, stops_of_route: List[Dict[Any]]) -> None:
+    def update_notify_stops(self, stops_of_route: List[Dict[str, Any]]) -> None:
         same_direction_stops = next((route for route in stops_of_route if route.get('Direction') == self.direction.value), None)
         if same_direction_stops is None:
             raise Exception("Not existed bus route.")

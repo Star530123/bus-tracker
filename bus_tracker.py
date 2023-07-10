@@ -6,16 +6,16 @@ from itertools import groupby
 
 class BusTracker:
     def __init__(self):
-        self._route_subscription_dict: Dict[Tuple(str, int), List[UserSetting]] = {}
-        self._stops_of_route_dict: Dict[Tuple(str, int), List[Dict[Any]]]   = {}
+        self._route_subscription_dict: Dict[Tuple[str, int], List[UserSetting]] = {}
+        self._stops_of_route_dict: Dict[Tuple[str, int], List[Dict[str, Any]]]   = {}
         self._user_count = 0
     
     @property
-    def route_subscription_dict(self) -> Dict[Tuple(str, int), List[UserSetting]]:
+    def route_subscription_dict(self) -> Dict[Tuple[str, int], List[UserSetting]]:
         return self._route_subscription_dict
 
     @property
-    def stops_of_route_dict(self) -> Dict[Tuple(str, int), List[Dict[Any]]]:
+    def stops_of_route_dict(self) -> Dict[Tuple[str, int], List[Dict[str, Any]]]:
         return self._stops_of_route_dict
     
     @property
@@ -37,7 +37,7 @@ class BusTracker:
             self.route_subscription_dict[key].append(setting)
         self._increment_user_count()
     
-    def _get_stops_of_route(self, key: Tuple[str, int]) -> List[Dict[Any]]:
+    def _get_stops_of_route(self, key: Tuple[str, int]) -> List[Dict[str, Any]]:
         if self.stops_of_route_dict.get(key) is not None:
             return self.stops_of_route_dict[key]
         query = Query()
@@ -66,7 +66,7 @@ class BusTracker:
         for key, user_setting_list in self.route_subscription_dict.items():
             self.route_subscription_dict[key] = [setting for setting in user_setting_list if setting not in remove_set]
 
-    def _direction_stop_sequence_dict(self, real_time_near_stops: List[Dict[Any]]) -> Dict[int, Set[int]]:
+    def _direction_stop_sequence_dict(self, real_time_near_stops: List[Dict[str, Any]]) -> Dict[int, Set[int]]:
         sorted_stops = sorted(real_time_near_stops, key=lambda stop: stop['Direction'])
         grouped_stops = groupby(sorted_stops, lambda stop: stop['Direction'])
         

@@ -4,7 +4,7 @@ from enum import Enum
 
 class Query:
     def __init__(self):
-        self._options: Dict[Any] = dict()
+        self._options: Dict[str, Any] = dict()
         self._options['top'] = 30
         self._options['format'] = 'JSON'
 

@@ -1,6 +1,7 @@
 from user_setting import UserSetting
-from tdx_api.bus.v2.api import *
-from typing import Dict, Tuple, Set, Any
+import tdx_api.bus.v2.api as bus_api
+from tdx_api.bus import *
+from typing import Dict, Tuple, Set, Any, List
 from tdx_api.bus.response import *
 from itertools import groupby
 
@@ -43,7 +44,7 @@ class BusTracker:
         query = Query()
         query.select([StopOfRoute.DIRECTION, StopOfRoute.STOPS])
         query.filter(f"RouteName/Zh_tw eq '{key[1]}'")
-        self.stops_of_route_dict[key] = get_bus_stop_of_route(city=key[0], route=key[1], query=query.complete())
+        self.stops_of_route_dict[key] = bus_api.get_bus_stop_of_route(city=key[0], route=key[1], query=query.complete())
         return self.stops_of_route_dict[key]
     
     def track(self) -> None:
@@ -51,9 +52,9 @@ class BusTracker:
         for (city, route), user_setting_list in self.route_subscription_dict.items():
             query = Query()
             query.select([RealTimeNearStop.PLATE_NUMB, RealTimeNearStop.DIRECTION, RealTimeNearStop.STOP_NAME])
-            real_time_near_stops = get_bus_real_time_near_stop(city, route, query.complete())
+            real_time_near_stops = bus_api.get_bus_real_time_near_stop(city, route, query.complete())
             direction_stop_sequence_dict = self._direction_stop_sequence_dict(real_time_near_stops)
-            print(f'Current buses positions: {direction_stop_sequence_dict}')
+            print(f'[route = {route}]Current buses positions: {direction_stop_sequence_dict}')
 
             for user_setting in user_setting_list:
                 if user_setting.is_bus_approaching(direction_stop_sequence_dict):

@@ -2,8 +2,7 @@ import requests
 import json
 import os
 import time
-from tdx_api.bus.query import *
-
+from typing import List, Dict, Any
 CLIENT_ID = os.getenv('CLIENT_ID')
 CLIENT_SECRET = os.getenv('CLIENT_SECRET')
 

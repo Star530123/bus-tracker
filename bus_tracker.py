@@ -63,8 +63,15 @@ class BusTracker:
                         remove_set.add(user_setting)
                         self._decrement_user_count()
 
+        remove_key_list = []
         for key, user_setting_list in self.route_subscription_dict.items():
             self.route_subscription_dict[key] = [setting for setting in user_setting_list if setting not in remove_set]
+            if len(user_setting_list) == 0:
+                remove_key_list.append(key) 
+
+        for remove_key in remove_key_list:
+            del self.route_subscription_dict[remove_key]
+            del self.stops_of_route_dict[remove_key]
 
     def _direction_stop_sequence_dict(self, real_time_near_stops: List[Dict[str, Any]]) -> Dict[int, Set[int]]:
         sorted_stops = sorted(real_time_near_stops, key=lambda stop: stop['Direction'])

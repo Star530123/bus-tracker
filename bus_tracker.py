@@ -1,31 +1,31 @@
 from user_setting import UserSetting
 from tdx_api.bus.v2.api import *
-from typing import Dict, Tuple, Set
+from typing import Dict, Tuple, Set, Any
 from tdx_api.bus.response import *
 from itertools import groupby
 
 class BusTracker:
     def __init__(self):
-        self._route_subscription_dict = {}
-        self._stops_of_route_dict: Dict[tuple, list[UserSetting]]  = {}
+        self._route_subscription_dict: Dict[Tuple(str, int), List[UserSetting]] = {}
+        self._stops_of_route_dict: Dict[Tuple(str, int), List[Dict[Any]]]   = {}
         self._user_count = 0
     
     @property
-    def route_subscription_dict(self) -> Dict[Tuple, List[UserSetting]]:
+    def route_subscription_dict(self) -> Dict[Tuple(str, int), List[UserSetting]]:
         return self._route_subscription_dict
 
     @property
-    def stops_of_route_dict(self):
+    def stops_of_route_dict(self) -> Dict[Tuple(str, int), List[Dict[Any]]]:
         return self._stops_of_route_dict
     
     @property
     def user_count(self) -> int:
         return self._user_count
     
-    def decrement_user_count(self) -> None:
+    def _decrement_user_count(self) -> None:
         self._user_count -= 1
 
-    def increment_user_count(self) -> None:
+    def _increment_user_count(self) -> None:
         self._user_count += 1
     
     def subscribe_route_notification(self, setting: UserSetting) -> None:
@@ -35,9 +35,9 @@ class BusTracker:
             self.route_subscription_dict[key] = [setting]
         else:
             self.route_subscription_dict[key].append(setting)
-        self.increment_user_count()
+        self._increment_user_count()
     
-    def _get_stops_of_route(self, key):
+    def _get_stops_of_route(self, key: Tuple[str, int]) -> List[Dict[Any]]:
         if self.stops_of_route_dict.get(key) is not None:
             return self.stops_of_route_dict[key]
         query = Query()
@@ -61,13 +61,13 @@ class BusTracker:
                     user_setting.increment_notify_counter()
                     if user_setting.has_reached_notification_limit():
                         remove_set.add(user_setting)
-                        self.decrement_user_count()
+                        self._decrement_user_count()
 
         for key, user_setting_list in self.route_subscription_dict.items():
             self.route_subscription_dict[key] = [setting for setting in user_setting_list if setting not in remove_set]
 
-    def _direction_stop_sequence_dict(self, real_time_near_stops) -> Dict[int, Set[int]]:
+    def _direction_stop_sequence_dict(self, real_time_near_stops: List[Dict[Any]]) -> Dict[int, Set[int]]:
         sorted_stops = sorted(real_time_near_stops, key=lambda stop: stop['Direction'])
         grouped_stops = groupby(sorted_stops, lambda stop: stop['Direction'])
         
-        return {k: set(map(lambda stop: stop['StopSequence'], v)) for k, v in grouped_stops}
+        return {direction: set(map(lambda stop: stop['StopSequence'], stops)) for direction, stops in grouped_stops}

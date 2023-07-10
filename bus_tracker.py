@@ -1,8 +1,7 @@
 from user_setting import UserSetting
-import tdx_api.bus.v2.api as bus_api
-from tdx_api.bus import *
+import tdx.bus.v2.api as bus_api
+from tdx.bus import *
 from typing import Dict, Tuple, Set, Any, List
-from tdx_api.bus.response import *
 from itertools import groupby
 
 class BusTracker:

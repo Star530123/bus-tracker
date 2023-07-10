@@ -2,11 +2,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from tdx_api.bus.v2.api import *
 from bus_tracker import BusTracker
 from user_setting import UserSetting
 import time
-import tdx_api.bus.enum as BusEnum
+import tdx.bus.enum as BusEnum
 
 if __name__=='__main__':
     bus_tracker = BusTracker()

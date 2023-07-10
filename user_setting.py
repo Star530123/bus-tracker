@@ -1,4 +1,4 @@
-from tdx_api.bus import enum as BusEnum
+from tdx.bus import enum as BusEnum
 from typing import Dict, Set, Tuple, List, Any
 NOTIFICATION_LIMIT = 3
 

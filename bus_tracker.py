@@ -30,7 +30,7 @@ class BusTracker:
     
     def subscribe_route_notification(self, setting: UserSetting) -> None:
         key = (setting.city, setting.route)
-        setting.update_notify_stops(self._get_stops_of_route(key))
+        setting.update_notify_stop_sequences(self._get_stops_of_route(key))
         if key not in self.route_subscription_dict:
             self.route_subscription_dict[key] = [setting]
         else:

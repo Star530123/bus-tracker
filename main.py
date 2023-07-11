@@ -15,7 +15,7 @@ if __name__=='__main__':
         route=672, 
         direction=BusEnum.Direction.INBOUND, 
         target_stop='博仁醫院', 
-        before_target_stop=(3, 5)
+        notify_range_before_target=(3, 5)
     )
     setting2 = UserSetting(
         username='Simon', 
@@ -23,7 +23,7 @@ if __name__=='__main__':
         route=214, 
         direction=BusEnum.Direction.OUTBOUND, 
         target_stop='光華商場', 
-        before_target_stop=(3, 7)
+        notify_range_before_target=(3, 7)
     )
     bus_tracker.subscribe_route_notification(setting)
     bus_tracker.subscribe_route_notification(setting2)
